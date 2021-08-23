@@ -5,6 +5,7 @@
 		"dev": "svelte-kit dev",
 		"start": "svelte-kit dev --open",
 		"build": "svelte-kit build",
+		"build-pwa": "npm run build && node ./pwa.js ",
 		"preview": "svelte-kit preview",
 		"lint": "prettier --check . && eslint --ignore-path .gitignore .",
 		"format": "prettier --write ."
@@ -19,6 +20,7 @@
 		"eslint": "^7.22.0",
 		"eslint-config-prettier": "^8.1.0",
 		"eslint-plugin-svelte3": "^3.2.0",
+		"fast-glob": "^3.2.7",
 		"mdsvex": "^0.9.3",
 		"postcss": "^8.3.5",
 		"postcss-load-config": "^3.1.0",
@@ -26,9 +28,10 @@
 		"prettier-plugin-svelte": "^2.2.0",
 		"svelte": "^3.38.2",
 		"svelte-preprocess": "^4.7.4",
+		"tailwindcss": "^2.2.4",
 		"tslib": "^2.0.0",
 		"typescript": "^4.0.0",
-		"tailwindcss": "^2.2.4"
+		"vite-plugin-pwa": "^0.11.0"
 	},
 	"type": "module",
 	"dependencies": {

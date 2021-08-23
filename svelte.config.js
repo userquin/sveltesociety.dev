@@ -1,6 +1,8 @@
 import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
 import { mdsvex } from 'mdsvex';
+import { VitePWA } from 'vite-plugin-pwa';
+import { pwaConfiguration } from './pwa-configuration.js'
 
 const extensions = [`.svelte`, '.md', `.mdx`, '.svx'];
 
@@ -29,7 +31,10 @@ const config = {
 				// workaround Vite issue to fix highlighting on cheatsheet
 				// https://github.com/metonym/svelte-highlight/issues/158
 				include: ["highlight.js/lib/core"],
-			}
+			},
+			plugins: [
+				VitePWA({ ...pwaConfiguration })
+			]
 		}
 	}
 };

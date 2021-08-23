@@ -3,6 +3,15 @@
 	import Header from './_Header/Header.svelte';
 	import Footer from './_Footer.svelte';
 	import metatags from '$lib/stores/metatags';
+	import { onMount } from 'svelte';
+	import { browser, dev } from '$app/env';
+
+	let ReloadPrompt;
+	onMount(async () => {
+		!dev && browser && (ReloadPrompt = (await import('$lib/components/ReloadPrompt/index.svelte')).default)
+	})
+
+
 </script>
 
 <svelte:head>
@@ -15,6 +24,7 @@
 			{/if}
 		{/if}
 	{/each}
+	<link rel="manifest" href="/_app/manifest.webmanifest">
 </svelte:head>
 
 <Header />
@@ -22,3 +32,7 @@
 	<slot />
 </main>
 <Footer />
+HI
+{#if ReloadPrompt}
+	<svelte:component this={ReloadPrompt}/>
+{/if}
