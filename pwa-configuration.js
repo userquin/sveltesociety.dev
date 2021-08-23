@@ -43,7 +43,9 @@ const pwaConfiguration = {
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 		manifestTransforms: [async(entries) => {
 			// manifest.webmanifest is added always by pwa plugin, so we remove it
-			const manifest = entries.filter(({ url }) => url !== 'manifest.webmanifest').map((e) => {
+			const manifest = entries.filter(({ url }) =>
+				url !== 'manifest.webmanifest' && url !== 'sw.js' && !url.startsWith('workbox-')
+			).map((e) => {
 				const url = e.url
 				if (url) {
 					if (url.endsWith('.html')) {
