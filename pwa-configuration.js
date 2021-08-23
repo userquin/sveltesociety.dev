@@ -38,7 +38,7 @@ const pwaConfiguration = {
 		globDirectory: './build/',
 		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,webp,svg,woff2,webmanifest}'],
 		globIgnores: [
-			'**/custom-worker*', '**/workbox-*'
+			'**/sw*', '**/workbox-*'
 		],
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 		manifestTransforms: [async(entries) => {
