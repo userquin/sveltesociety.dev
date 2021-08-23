@@ -32,7 +32,6 @@
 	<slot />
 </main>
 <Footer />
-HI
 {#if ReloadPrompt}
 	<svelte:component this={ReloadPrompt}/>
 {/if}
