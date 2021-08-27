@@ -8,6 +8,10 @@ const webmanifestDestinations = [
 	'./build/',
 ]
 
+const swDestinations = [
+	'./build/',
+]
+
 const buildPwa = async() => {
 	// const pwaConfiguration = await buildPwaConfiguration()
 	const config = await resolveConfig({ plugins: [VitePWA({ ...pwaConfiguration })] }, 'build', 'production' )
@@ -16,17 +20,12 @@ const buildPwa = async() => {
 	if (pwaPlugin?.generateSW) {
 		console.log('Generating PWA...')
 		await pwaPlugin.generateSW()
-		// const swStuff = await fg([/^sw*/i, /^workbox-*/i],
-		// 	{
-		// 		cwd: './build',
-		// 		deep: 1,
-		// 		onlyFiles: true,
-		// 		unique: true,
-		// 	})
-		// swStuff.forEach(sw => rmSync(sw, { force: true }))
-		//const webmanifest = await import('./.svelte-kit/output/client/_app/manifest.webmanifest')
 		webmanifestDestinations.forEach(d => {
 			copyFileSync('./.svelte-kit/output/client/_app/manifest.webmanifest', `${d}/manifest.webmanifest`)
+		})
+		// don't copy workbox, svelte kit will copy it
+		swDestinations.forEach(d => {
+			copyFileSync('./.svelte-kit/output/client/sw.js', `${d}/sw.js`)
 		})
 		console.log('Generated PWA complete')
 	}
