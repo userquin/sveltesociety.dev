@@ -1,7 +1,9 @@
 import { resolveConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa';
 import { pwaConfiguration } from './pwa-configuration.js'
-import { copyFileSync } from 'fs';
+import { copyFileSync, rmSync } from 'fs';
+import fg from 'fast-glob'
+import { resolve } from 'path';
 
 const webmanifestDestinations = [
 	'./.svelte-kit/output/client/',
