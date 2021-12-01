@@ -24,9 +24,7 @@
 			{/if}
 		{/if}
 	{/each}
-	{#if (!dev && browser)}
-		<link rel="manifest" href="/_app/manifest.webmanifest">
-  {/if}
+	<link rel="manifest" href="/_app/manifest.webmanifest">
 </svelte:head>
 
 <Header />
