@@ -10,6 +10,7 @@ const workboxTransform = async(entries) => {
 			if (url.startsWith('/')) {
 				url = url.slice(1);
 			}
+			// beware: here we SHOULD replace `/` with `base` to support for example `/app/` directory or server context
 			if (url === 'index.html') {
 				e.url = '/';
 			} else if (url.endsWith('index.html')) {
