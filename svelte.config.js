@@ -3,6 +3,8 @@ import preprocess from 'svelte-preprocess';
 import { mdsvex, escapeSvelte } from 'mdsvex';
 import hljs from 'highlight.js';
 import path from 'path';
+import { VitePWA } from 'vite-plugin-pwa'
+import { pwaConfiguration } from './scripts/pwa-configuration.js';
 
 const extensions = [`.svelte`, '.md', `.mdx`, '.svx'];
 
@@ -47,7 +49,10 @@ const config = {
 					$styles: path.resolve('./src/lib/styles'),
 					$stores: path.resolve('./src/lib/stores')
 				}
-			}
+			},
+			plugins: [
+				VitePWA(pwaConfiguration)
+			]
 		}
 	}
 };

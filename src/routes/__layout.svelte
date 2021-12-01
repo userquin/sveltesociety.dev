@@ -7,10 +7,17 @@
 	import Footer from '$layout/Footer.svelte';
 	import metatags from '$lib/stores/metatags';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import { browser, dev } from '$app/env';
 
 	let path = $page.path.split('/').toString().replace(',', '');
 	if ($page.path === '/') path = 'Home';
 	const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+
+	let ReloadPrompt;
+	onMount(async () => {
+		!dev && browser && (ReloadPrompt = (await import('$lib/components/ReloadPrompt.svelte')).default);
+	})
 </script>
 
 <svelte:head>
@@ -24,6 +31,9 @@
 			{/if}
 		{/if}
 	{/each}
+	{#if (!dev && browser)}
+		<link rel="manifest" href="/_app/manifest.webmanifest">
+	{/if}
 </svelte:head>
 
 <Header />
@@ -31,6 +41,10 @@
 	<slot />
 </main>
 <Footer />
+
+{#if ReloadPrompt}
+	<svelte:component this={ReloadPrompt} />
+{/if}
 
 <style>
 	main {
