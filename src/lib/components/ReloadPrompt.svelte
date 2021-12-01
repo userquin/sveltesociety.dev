@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { useRegisterSW } from 'virtual:pwa-register/svelte'
-	const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW()
+	import { useRegisterSW } from 'virtual:pwa-register/svelte';
+	const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
 	function close() {
 		offlineReady.set(false);
 		needRefresh.set(false);
 	}
-	$: toast = $offlineReady || $needRefresh
+	$: toast = $offlineReady || $needRefresh;
 </script>
 
 {#if toast}
