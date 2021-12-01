@@ -1,223 +1,125 @@
 <script>
-  import ComponentCard from "$lib/components/ComponentIndex/Card.svelte";
-  import List from "$lib/components/ComponentIndex/CardList.svelte";
-  import Button from "$lib/components/ComponentIndex/ArrowButton.svelte";
-  import components from "./components.json";
+	import { persist, localStorage } from '@macfja/svelte-persistent-store';
+	import { writable } from 'svelte/store';
+	import SearchLayout from '$layouts/SearchLayout.svelte';
+	import ComponentCard from '$lib/components/ComponentIndex/Card.svelte';
+	import List from '$components/ComponentIndex/CardList.svelte';
+	import Button from '$components/ComponentIndex/ArrowButton.svelte';
+	import components from './components.json';
+	import { compare, selectSortItems } from '$lib/utils/sort';
+	import { extractUnique } from '$lib/utils/extractUnique';
+	import Select from '$components/Select.svelte';
+	let searchValue;
+	const tagItems = extractUnique(components, 'tags');
+	let filterTag = [];
+	let selectedTags = null;
+	const categoryItems = [
+		{ label: 'All', value: null },
+		...extractUnique(components, 'category').filter((cat) => cat.value !== '')
+	];
+	let selectedCategory = null;
+	let filterCategory = null;
+	let sorting = 'stars_desc';
+	let selectedSorting = { value: 'stars_desc', label: 'Stars Desc' };
+	$: sorting = selectedSorting?.value || 'stars_desc';
+	let packageManager = persist(writable('npm'), localStorage(), 'packageManager');
+	const intersection = (array1, array2) => {
+		return array1.filter((item) => array2.includes(item));
+	};
+	$: filterCategory = selectedCategory?.value || null;
+	$: dataToDisplay = components
+		.filter((component) => {
+			if (!searchValue && filterTag.length === 0 && filterCategory === null) return true;
+			if (
+				(searchValue &&
+					!(
+						component.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+						component.description.toLowerCase().includes(searchValue.toLowerCase())
+					)) ||
+				(filterTag.length > 0 && intersection(filterTag, component.tags).length === 0) ||
+				(filterCategory !== null && component.category !== filterCategory)
+			) {
+				return false;
+			}
+			return true;
+		})
+		.sort(compare(sorting));
+	$: categories = extractUnique(dataToDisplay, 'category');
+	$: filterTag = selectedTags?.map((obj) => obj.value) || [];
 
-  let searchValue;
-  let searchTag;
-  const tags = Array.from(new Set(components.map(item => item.tags).flat()))
-  const allCategories = Array.from(new Set(components.map(item => item.category).flat()))
-  let filterTag = []
-  let filterCategory = null
-  let sorting = 'added_desc';
-
-  const intersection = (array1, array2) => {
-    return array1.filter(item => array2.includes(item))
-  }
-
-  $: dataToDisplay = components.filter(component => {
-    if (!searchValue && filterTag.length === 0 && filterCategory === null) return true
-
-    if (
-            (searchValue && !(component.title.toLowerCase().includes(searchValue.toLowerCase()) || component.description.toLowerCase().includes(searchValue.toLowerCase())))
-            || (filterTag.length > 0 && intersection(filterTag, component.tags).length === 0)
-            || (filterCategory !== null && component.category !== filterCategory)
-    ) {
-      return false
-    }
-
-    return true
-  }).sort((componentA, componentB) => {
-    switch (sorting) {
-      case "added_desc": return new Date(componentB.addedOn || '').getTime() - new Date(componentA.addedOn || '').getTime()
-      case "added_asc": return new Date(componentA.addedOn || '').getTime() - new Date(componentB.addedOn || '').getTime()
-      case "name_asc": return componentA.title.toLowerCase().localeCompare(componentB.title.toLowerCase())
-      case "name_desc": return componentB.title.toLowerCase().localeCompare(componentA.title.toLowerCase())
-      case "stars_desc": return (componentB.stars || 0) - (componentA.stars || 0)
-      case "stars_asc": return (componentA.stars || 0) - (componentB.stars || 0)
-    }
-  });
-  $: tagSearchResult = searchTag ? tags.filter(item => item.includes(searchTag)) : tags
-  $: categories = Array.from(new Set(dataToDisplay.map(item => item.category)))
+	const categoryId = {
+		Animations: 'animations',
+		'Data Visualisation': 'data-vis',
+		'Design Pattern': 'design-patterns',
+		'Design System': 'design-systems',
+		'Developer Experience': 'dx',
+		'Forms & User Input': 'input',
+		Integration: 'integrations',
+		'Rich Text Editor': 'text-editors',
+		Routers: 'routers',
+		Stores: 'stores',
+		'SvelteKit Adapters': 'adapters',
+		Testing: 'testing',
+		'User Interaction': 'ui'
+	};
 </script>
 
-<style> 
-  h1 {
-    @apply text-5xl;
-  }
+<SearchLayout title="Components">
+	<section class="controls" slot="controls">
+		<div class="inputs">
+			<Select bind:value={selectedTags} items={tagItems} isMulti label="Tags" />
+			<Select
+				label="Category"
+				bind:value={selectedCategory}
+				items={categoryItems}
+				placeholder="Category"
+				isClearable={false}
+				showIndicator
+			/>
+			<Select
+				items={selectSortItems}
+				bind:value={selectedSorting}
+				label="Sorting"
+				showIndicator
+				isClearable={false}
+			/>
+			<Button small active={$packageManager !== ''}>
+				{$packageManager.toUpperCase()}
+				<ul slot="menu" role="menu" class="popin no-wrap">
+					<li>
+						<label><input type="radio" bind:group={$packageManager} value="npm" /> NPM</label>
+					</li>
+					<li>
+						<label><input type="radio" bind:group={$packageManager} value="pnpm" /> PNPM</label>
+					</li>
+					<li>
+						<label><input type="radio" bind:group={$packageManager} value="yarn" /> Yarn</label>
+					</li>
+				</ul>
+			</Button>
+		</div>
 
-  hr {
-    margin-block: 4rem;
-  }
-
-  .controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: Overpass;
-    position: relative;
-  }
-
-  .inputs {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    grid-gap: 0.5rem;
-    margin-right: 2rem;
-  }
-
-  .searchbar {
-    height: 100%;
-    width: 35%;
-    font-family: Overpass;
-    border-width: 0;
-    background: #f3f6f9 url(/images/search-icon.svg) 98% no-repeat;
-    margin: 0;
-    padding: 10px 15px;
-  }
-
-  .searchbar-count {
-    position: absolute;
-    top: 100%;
-    right: 0;
-  }
-
-  ul.popin {
-    padding: 0.5ex;
-    margin: 0;
-    font-size: 0.7em;
-    max-height: 50vh;
-    overflow-y: auto;
-  }
-
-  ul.popin li {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-transform: capitalize;
-  }
-  ul.popin li:hover {
-    background: #eee;
-    border-radius: 3px;
-  }
-  ul.popin li.tag-search {
-    position: sticky;
-    top: -0.5ex;
-    margin: 0 -0.5ex;
-    padding: 0.5ex;
-    border-radius: 4px;
-    background: white;
-  }
-  ul.popin li.tag-search input {
-    margin: 0;
-    background: #f3f6f9;
-    width: 100%;
-    min-width: 15ch;
-  }
-  ul.popin li.tag-search:hover {
-    background: white;
-  }
-  ul.popin.no-wrap li {
-    white-space: nowrap;
-  }
-
-  ul.popin li label {
-    display: flex;
-    align-items: center;
-    line-height: 0.7rem;
-    padding: 0.8ex;
-  }
-
-  ul.popin li input {
-    flex: 0;
-    margin: 0 1ex 0 0;
-  }
-
-  @media screen and (max-width: 1024px) {
-    .controls {
-      flex-flow: column-reverse;
-    }
-
-    .inputs {
-      align-self: flex-start;
-      width: 100%;
-      grid-template-columns: repeat(3, auto);
-    }
-
-    .searchbar {
-      align-self: flex-end;
-      margin-bottom: 1ex;
-    }
-  }
-
-  @media screen and (max-width: 700px) {
-    .controls {
-      align-items: stretch;
-    }
-
-    .inputs {
-      grid-template-columns: auto;
-    }
-
-    .searchbar {
-      width: auto;
-      align-self: stretch;
-    }
-  }
-</style>
-<svelte:head>
-  <title>Components - Svelte Society</title>
-</svelte:head>
-
-<main class="wrapper">
-  <h1>Components</h1>
-  <div class="controls">
-    <div class="inputs">
-      <Button active={filterTag.length > 0}>
-        Tags {#if filterTag.length > 0}<small>({filterTag.length})</small>{/if}
-        <ul slot="menu" role="menu" class="popin">
-          <li class="tag-search"><input placeholder="Search for tags..." bind:value={searchTag} /></li>
-          {#each tagSearchResult as tag}
-            <li><label><input type="checkbox" bind:group={filterTag} value={tag}> {tag}</label></li>
-          {/each}
-        </ul>
-      </Button>
-      <Button active={filterCategory !== null}>
-        Categories
-        <ul slot="menu" role="menu" class="popin">
-          <li><label><input type="radio" bind:group={filterCategory} value={null}> All</label></li>
-          {#each allCategories as category}
-            <li><label><input type="radio" bind:group={filterCategory} value={category}> {category||"Unclassified"}</label></li>
-          {/each}
-        </ul>
-      </Button>
-      <Button on:click={() => location.href = "/help/components"}>Submit a component</Button>
-      <Button active={sorting !== ''}>
-        Sort
-        <ul slot="menu" role="menu" class="popin no-wrap">
-            <li><label><input type="radio" bind:group={sorting} value="added_desc"> Last Added first</label></li>
-            <li><label><input type="radio" bind:group={sorting} value="added_asc"> Oldest first</label></li>
-            <li><label><input type="radio" bind:group={sorting} value="stars_desc"> Stars Desc</label></li>
-            <li><label><input type="radio" bind:group={sorting} value="stars_asc"> Stars Asc</label></li>
-            <li><label><input type="radio" bind:group={sorting} value="name_asc"> Name Asc</label></li>
-            <li><label><input type="radio" bind:group={sorting} value="name_desc"> Name Desc</label></li>
-        </ul>
-      </Button>
-    </div>
-
-    <input
-      class="searchbar"
-      type="text"
-      placeholder="Search for components..."
-      bind:value={searchValue} />
-    <span class="searchbar-count">{dataToDisplay.length} result{#if dataToDisplay.length !== 1}s{/if}</span>
-  </div>
-  <hr />
-  {#each categories as category}
-    <List title={category||"Unclassified"}>
-      {#each dataToDisplay.filter(d => d.category === category) as data}
-        <ComponentCard {...data} />
-      {/each}
-    </List>
-  {/each}
-</main>
+		<a href="/help/submitting?type=component" class="submit">Submit a component</a>
+		<input
+			class="searchbar"
+			type="text"
+			placeholder="Search for components..."
+			bind:value={searchValue}
+		/>
+		<span class="searchbar-count"
+			>{dataToDisplay.length} result{#if dataToDisplay.length !== 1}s{/if}</span
+		>
+	</section>
+	<section slot="items">
+		{#each categories as category}
+			<List
+				title={category.label || 'Unclassified'}
+				id={categoryId[category.label] || category.label || 'unclassified'}
+			>
+				{#each dataToDisplay.filter((d) => d.category === category.value) as data}
+					<ComponentCard {...data} manager={$packageManager} />
+				{/each}
+			</List>
+		{/each}
+	</section>
+</SearchLayout>

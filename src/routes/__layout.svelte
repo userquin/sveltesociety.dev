@@ -1,8 +1,16 @@
 <script>
-	import '../app.postcss';
-	import Header from './_Header/Header.svelte';
-	import Footer from './_Footer.svelte';
+	// import '../app.css';
+	import '$styles/reset.css';
+	import '$styles/root.css';
+	import '$styles/globals.css';
+	import Header from '$layout/Header.svelte';
+	import Footer from '$layout/Footer.svelte';
 	import metatags from '$lib/stores/metatags';
+	import { page } from '$app/stores';
+
+	let path = $page.path.split('/').toString().replace(',', '');
+	if ($page.path === '/') path = 'Home';
+	const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 </script>
 
 <svelte:head>
@@ -10,6 +18,7 @@
 		{#if content}
 			{#if ['title', 'description', 'image'].includes(property)}
 				<meta name={property} {content} />
+				<title>{capitalize(path)} - Svelte Society</title>
 			{:else}
 				<meta {property} {content} />
 			{/if}
@@ -18,7 +27,19 @@
 </svelte:head>
 
 <Header />
-<main class="container mx-auto py-10 px-5 lg:py-20">
+<main class="container">
 	<slot />
 </main>
 <Footer />
+
+<style>
+	main {
+		padding: var(--s-10) var(--s-5) var(--s-20);
+	}
+
+	@media (min-width: 1280px) {
+		main {
+			padding: var(--s-20) var(--s-5);
+		}
+	}
+</style>

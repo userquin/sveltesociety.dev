@@ -6,7 +6,7 @@
 		"description": "Compile Svelte components with Rollup",
 		"url": "https://github.com/sveltejs/rollup-plugin-svelte",
 		"tags": ["official"],
-		"stars": 396
+		"stars": 402
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -15,7 +15,7 @@
 		"description": "Webpack loader for svelte components",
 		"url": "https://github.com/sveltejs/svelte-loader",
 		"tags": ["official"],
-		"stars": 486
+		"stars": 492
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -24,7 +24,7 @@
 		"description": "This is the official svelte plugin for vite",
 		"url": "https://github.com/sveltejs/vite-plugin-svelte",
 		"tags": ["official"],
-		"stars": 193
+		"stars": 225
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -33,7 +33,7 @@
 		"description": "An esbuild plugin to compile Svelte components",
 		"url": "https://github.com/EMH333/esbuild-svelte",
 		"tags": [],
-		"stars": 100
+		"stars": 110
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -105,7 +105,7 @@
 		"description": "An extension that allows inspection of Svelte component hierarchy and state in the Firefox and Chrome developer tools",
 		"url": "https://github.com/RedHatter/svelte-devtools",
 		"tags": [],
-		"stars": 548
+		"stars": 552
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -114,7 +114,7 @@
 		"description": "A ✨ magical ✨ Svelte preprocessor with sensible defaults and support for: PostCSS, SCSS, Less, Stylus, Coffeescript, TypeScript, Pug and much more",
 		"url": "https://github.com/sveltejs/svelte-preprocess",
 		"tags": ["official"],
-		"stars": 1100
+		"stars": 1124
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -132,7 +132,7 @@
 		"description": "Svelte preprocessor support for modular-css",
 		"url": "https://github.com/tivac/modular-css/tree/main/packages/svelte",
 		"tags": [],
-		"stars": 239
+		"stars": 240
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -141,7 +141,7 @@
 		"description": "Svelte preprocessor for sass",
 		"url": "https://github.com/ls-age/svelte-preprocess-sass",
 		"tags": [],
-		"stars": 83
+		"stars": 84
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -177,7 +177,7 @@
 		"description": "An ESLint plugin for Svelte v3 components.",
 		"url": "https://github.com/sveltejs/eslint-plugin-svelte3",
 		"tags": ["official"],
-		"stars": 284
+		"stars": 289
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -186,7 +186,7 @@
 		"description": "Format your svelte components using prettier.",
 		"url": "https://github.com/sveltejs/prettier-plugin-svelte",
 		"tags": ["official"],
-		"stars": 375
+		"stars": 388
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -213,7 +213,7 @@
 		"description": "Vim syntax highlighting and indentation for Svelte 3 components.",
 		"url": "https://github.com/evanleck/vim-svelte",
 		"tags": [],
-		"stars": 187
+		"stars": 193
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -222,7 +222,7 @@
 		"description": "Vim syntax and indent plugin for .svelte files",
 		"url": "https://github.com/leafOfTree/vim-svelte-plugin",
 		"tags": [],
-		"stars": 65
+		"stars": 67
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -231,7 +231,7 @@
 		"description": "Svelte support for (Neo)Vim",
 		"url": "https://github.com/coc-extensions/coc-svelte",
 		"tags": [],
-		"stars": 95
+		"stars": 98
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -240,7 +240,7 @@
 		"description": "Emacs major mode including support for Svelte",
 		"url": "https://github.com/fxbois/web-mode",
 		"tags": [],
-		"stars": 1448
+		"stars": 1458
 	},
 	{
 		"addedOn": "2021-08-09T10:14:05.723Z",
@@ -277,5 +277,13 @@
 		"url": "https://github.com/proverbial-ninja/vscode-svelte-component-extractor",
 		"tags": [],
 		"stars": 19
+	},
+	{
+		"title": "svelte-translate-tools",
+		"url": "https://github.com/noelmugnier/svelte-translate-tools",
+		"description": "Translation tools to extract/generate/compile translation files for your Svelte App (must be used with the package svelte-translate) at build time.",
+		"npm": "svelte-translate-tools",
+		"addedOn": "2021-09-29",
+		"category": "Bundler Plugins"
 	}
 ]
