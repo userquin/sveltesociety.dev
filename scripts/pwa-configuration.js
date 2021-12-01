@@ -40,7 +40,7 @@ const pwaConfiguration = {
 		mode: 'development',
 		navigateFallback: scope,
 		globDirectory: './build/',
-		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,webp,svg,woff2,webmanifest}'],
+		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,webp,svg,woff2,webmanifest}', '**/recipes', '**/events'],
 		globIgnores: [
 			'**/sw*', '**/workbox-*'
 		],
