@@ -10,6 +10,7 @@ const pwaConfiguration = {
 	scope,
 	base: scope,
 	manifest: {
+		id: scope,
 		short_name: 'Svelte Society',
 		name: 'Svelte Society',
 		start_url: scope,
