@@ -59,10 +59,23 @@ const pwaConfiguration = {
 				['static/logo512.png', '/logo512.png'],
 				['static/planeworld_plain.svg', '/planeworld_plain.svg'],
 			])
+			const dynamicResources = [
+				[/^static\/_app\/assets\/SyncWorker.(\.[a-f0-9]{8}).js$/, ([, hash]) => `/_app/assets/SyncWorker.${hash}.js`],
+			]
 			const manifest = entries.map((e) => {
 				const entry = resources.get(e.url)
 				if (entry) {
 					e.url = entry[1]
+				}
+				else {
+					let m
+					for (let matcher of dynamicResources) {
+						m = e.url.match(matcher[0])
+						if (m) {
+							e.url = matcher[1](m)
+							break
+						}
+					}
 				}
 				return e;
 			});
