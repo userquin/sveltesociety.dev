@@ -72,7 +72,7 @@ const pwaConfiguration = {
 			const dynamicResources = [
 				[/^static\/(.+)$/, ([, m]) => `/${m}`],
 			]
-			const manifest = deduplicated.values().map((e) => {
+			const manifest = [...deduplicated.values()].values().map((e) => {
 				let m
 				for (let matcher of dynamicResources) {
 					m = e.url.match(matcher[0])
