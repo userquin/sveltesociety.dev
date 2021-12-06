@@ -53,19 +53,16 @@ const pwaConfiguration = {
 		/** @type {import('workbox-build').ManifestTransform} */
 		manifestTransforms: [async(entries) => {
 			// map the icons and fonts on `./.vercel_build_output/static/
-			const resources = [
+			const resources = new Map([
 				['static/robots.txt', '/robots.txt'],
 				['static/logo192.png', '/logo192.png'],
 				['static/logo512.png', '/logo512.png'],
-			]
+				['static/planeworld_plain.svg', '/planeworld_plain.svg'],
+			])
 			const manifest = entries.map((e) => {
-				const { url } = e
-				const entry = resources.find(([entry]) => entry === url)
+				const entry = resources.get(e.url)
 				if (entry) {
-					return {
-						url: entry[1],
-						revision: e.revision
-					}
+					e.url = entry[1]
 				}
 				return e;
 			});
