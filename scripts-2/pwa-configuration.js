@@ -31,12 +31,12 @@ const pwaConfiguration = {
 		background_color: "#ffffff",
 		icons: [
 			{
-				src: '/logo192.png',
+				src: 'logo192.png',
 				sizes: "192x192",
 				type: "image/png"
 			},
 			{
-				src: '/logo512.png',
+				src: 'logo512.png',
 				"sizes": "512x512",
 				"type": "image/png"
 			}
@@ -70,14 +70,14 @@ const pwaConfiguration = {
 			}, new Map());
 
 			const dynamicResources = [
-				[/^static\/(.+)$/, ([, m]) => `/${m}`],
+				[/^static\/(.+)$/, ([, m]) => m],
 			]
-			const manifest = [...deduplicated.values()].values().map((e) => {
+			const manifest = [...deduplicated.values()].map((e) => {
 				let m
-				for (let matcher of dynamicResources) {
-					m = e.url.match(matcher[0])
+				for (let i = 0; i < dynamicResources.length; i++) {
+					m = e.url.match(dynamicResources[i][0])
 					if (m) {
-						e.url = matcher[1](m)
+						e.url = dynamicResources[i][1](m)
 						break
 					}
 				}
