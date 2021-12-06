@@ -14,7 +14,7 @@ const revision = createRevision()
 
 const pwaConfiguration = {
 	srcDir: './.vercel_build_output',
-	outDir: './.vercel_build_output/static/_app',
+	outDir: './.vercel_build_output/static/',
 	mode: 'development',
 	includeManifestIcons: false,
 	scope,
@@ -99,5 +99,4 @@ const pwaConfiguration = {
 	}
 };
 
-
-export { pwaConfiguration }
+export{ pwaConfiguration }

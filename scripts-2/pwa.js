@@ -8,7 +8,7 @@ import { pwaConfiguration } from './pwa-configuration.js';
 // ]
 
 const buildPwa = async() => {
-	const config = await resolveConfig({ plugins: [VitePWA({ ...pwaConfiguration })] }, '.vercel_build_output', 'production' )
+	const config = await resolveConfig({ plugins: [VitePWA({ ...pwaConfiguration })] }, 'build', 'production' )
 	// when `vite-plugin-pwa` is present, use it to regenerate SW after rendering
 	const pwaPlugin = config.plugins.find(i => i.name === 'vite-plugin-pwa')?.api
 	if (pwaPlugin?.generateSW) {
