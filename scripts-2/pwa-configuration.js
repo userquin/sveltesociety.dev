@@ -59,10 +59,20 @@ const pwaConfiguration = {
 			// 	['static/logo512.png', '/logo512.png'],
 			// 	['static/planeworld_plain.svg', '/planeworld_plain.svg'],
 			// ])
+			const deduplicated = entries.reduce((acc, e) => {
+				if (acc.has(e.url)) {
+					console.warn(`duplicated entry found, ignoring last one: ${e.url}, [${[acc.get(e.url).revision, e.revision].join(', ')}]`)
+					// acc.get(e.url).push(e)
+				} else {
+					acc.set(e.url, e)
+				}
+				return acc;
+			}, new Map());
+
 			const dynamicResources = [
 				[/^static\/(.+)$/, ([, m]) => `/${m}`],
 			]
-			const manifest = entries.map((e) => {
+			const manifest = deduplicated.values().map((e) => {
 				let m
 				for (let matcher of dynamicResources) {
 					m = e.url.match(matcher[0])
