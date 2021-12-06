@@ -53,30 +53,38 @@ const pwaConfiguration = {
 		/** @type {import('workbox-build').ManifestTransform} */
 		manifestTransforms: [async(entries) => {
 			// map the icons and fonts on `./.vercel_build_output/static/
-			const resources = new Map([
-				['static/robots.txt', '/robots.txt'],
-				['static/logo192.png', '/logo192.png'],
-				['static/logo512.png', '/logo512.png'],
-				['static/planeworld_plain.svg', '/planeworld_plain.svg'],
-			])
+			// const resources = new Map([
+			// 	['static/robots.txt', '/robots.txt'],
+			// 	['static/logo192.png', '/logo192.png'],
+			// 	['static/logo512.png', '/logo512.png'],
+			// 	['static/planeworld_plain.svg', '/planeworld_plain.svg'],
+			// ])
 			const dynamicResources = [
-				[/^static\/_app\/assets\/SyncWorker.(\.[a-f0-9]{8}).js$/, ([, hash]) => `/_app/assets/SyncWorker.${hash}.js`],
+				[/^static\/(.+)$/, ([, m]) => `/${m}`],
 			]
 			const manifest = entries.map((e) => {
-				const entry = resources.get(e.url)
-				if (entry) {
-					e.url = entry[1]
-				}
-				else {
-					let m
-					for (let matcher of dynamicResources) {
-						m = e.url.match(matcher[0])
-						if (m) {
-							e.url = matcher[1](m)
-							break
-						}
+				let m
+				for (let matcher of dynamicResources) {
+					m = e.url.match(matcher[0])
+					if (m) {
+						e.url = matcher[1](m)
+						break
 					}
 				}
+				// const entry = resources.get(e.url)
+				// if (entry) {
+				// 	e.url = entry[1]
+				// }
+				// else {
+				// 	let m
+				// 	for (let matcher of dynamicResources) {
+				// 		m = e.url.match(matcher[0])
+				// 		if (m) {
+				// 			e.url = matcher[1](m)
+				// 			break
+				// 		}
+				// 	}
+				// }
 				return e;
 			});
 
