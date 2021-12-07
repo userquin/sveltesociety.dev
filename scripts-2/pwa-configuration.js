@@ -39,12 +39,18 @@ const pwaConfiguration = {
 				src: 'logo512.png',
 				"sizes": "512x512",
 				"type": "image/png"
+			},
+			{
+				src: 'logo512.png',
+				"sizes": "512x512",
+				"type": "image/png",
+				"purpose": "any maskable"
 			}
 		]
 	},
 	workbox: {
 		mode: 'development',
-		navigateFallback: scope,
+		// navigateFallback: scope,
 		globDirectory: './.vercel_build_output/',
 		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,webp,svg,woff2,webmanifest}'],
 		globIgnores: [
@@ -83,7 +89,37 @@ const pwaConfiguration = {
 				url,
 				revision: revision()
 			}
-		})
+		}),
+		runtimeCaching: [
+			{
+				urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+				handler: 'CacheFirst',
+				options: {
+					cacheName: 'google-fonts-cache',
+					expiration: {
+						maxEntries: 10,
+						maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+					},
+					cacheableResponse: {
+						statuses: [0, 200],
+					},
+				},
+			},
+			{
+				urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+				handler: 'CacheFirst',
+				options: {
+					cacheName: 'gstatic-fonts-cache',
+					expiration: {
+						maxEntries: 100,
+						maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+					},
+					cacheableResponse: {
+						statuses: [0, 200],
+					},
+				},
+			},
+		],
 	}
 };
 
