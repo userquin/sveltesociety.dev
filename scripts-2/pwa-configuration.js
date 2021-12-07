@@ -55,7 +55,6 @@ const pwaConfiguration = {
 			const deduplicated = entries.reduce((acc, e) => {
 				if (acc.has(e.url)) {
 					console.warn(`duplicated entry found, ignoring last one: ${e.url}, [${[acc.get(e.url).revision, e.revision].join(', ')}]`)
-					// acc.get(e.url).push(e)
 				} else {
 					acc.set(e.url, e)
 				}
