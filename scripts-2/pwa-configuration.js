@@ -104,9 +104,9 @@ const pwaConfiguration = {
 				method: 'GET',
 				options: {
 					cacheName: 'api-prefetch-cache',
-				},
-				cacheableResponse: {
-					statuses: [0, 200],
+					cacheableResponse: {
+						statuses: [0, 200],
+					},
 				},
 			},
 			{
