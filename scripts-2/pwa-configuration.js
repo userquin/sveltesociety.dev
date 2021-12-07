@@ -52,7 +52,7 @@ const pwaConfiguration = {
 		mode: 'development',
 		// navigateFallback: scope,
 		globDirectory: './.vercel_build_output/',
-		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,webp,svg,woff2,webmanifest}'],
+		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,jeg,jpeg,webp,svg,woff2,webmanifest}'],
 		globIgnores: [
 			'**/sw*', '**/workbox-*'
 		],
@@ -76,6 +76,13 @@ const pwaConfiguration = {
 					m = e.url.match(dynamicResources[i][0])
 					if (m) {
 						e.url = dynamicResources[i][1](m)
+						if (e.url.endsWith('.html')) {
+							if (e.url === 'index.html') {
+								e.url = '/'
+							} else {
+								e.url = e.url.slice(0, e.url.lastIndexOf('/'))
+							}
+						}
 						break
 					}
 				}
@@ -84,13 +91,21 @@ const pwaConfiguration = {
 
 			return { manifest };
 		}],
-		additionalManifestEntries: ['/', '/about', '/flights', '/circles', '/news'].map((url) => {
-			return {
-				url,
-				revision: revision()
-			}
-		}),
+		// additionalManifestEntries: ['/', '/about', '/flights', '/circles', '/news'].map((url) => {
+		// 	return {
+		// 		url,
+		// 		revision: revision()
+		// 	}
+		// }),
 		runtimeCaching: [
+			{
+				handler: 'NetworkFirst',
+				urlPattern: /\/*\.json/,
+				method: 'GET',
+				options: {
+					cacheName: 'api-prefetch-cache',
+				},
+			},
 			{
 				urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
 				handler: 'CacheFirst',
