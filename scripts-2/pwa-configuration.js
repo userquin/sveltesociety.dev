@@ -105,6 +105,9 @@ const pwaConfiguration = {
 				options: {
 					cacheName: 'api-prefetch-cache',
 				},
+				cacheableResponse: {
+					statuses: [0, 200],
+				},
 			},
 			{
 				urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
