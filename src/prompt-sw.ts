@@ -13,6 +13,8 @@ self.addEventListener('message', (event) => {
 
 // self.__WB_MANIFEST is default injection point
 precacheAndRoute(self.__WB_MANIFEST, {
+	// https://developers.google.com/web/tools/workbox/modules/workbox-precaching#ignore_url_parameters
+	// if you have pages that can receive params or path variables, just add this entry
 	ignoreURLParametersMatching: [/.*/]
 })
 
