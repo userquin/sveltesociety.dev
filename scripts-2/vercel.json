@@ -10,7 +10,7 @@
       ]
     },
     {
-      "source": "/manifest.wemanifest",
+      "source": "/manifest.webmanifest",
       "headers": [
         {
           "key": "Cache-Control",
