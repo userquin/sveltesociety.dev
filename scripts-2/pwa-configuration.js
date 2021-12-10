@@ -21,7 +21,6 @@ const pwaConfiguration = {
 	base: scope,
 	manifest: {
 		id: scope,
-		useCredentials: true,
 		short_name: 'FlightLog',
 		name: 'Flight Logging',
 		start_url: scope,
