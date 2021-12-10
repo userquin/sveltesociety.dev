@@ -1,10 +1,10 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-vercel';
 import preprocess from 'svelte-preprocess';
 import { mdsvex, escapeSvelte } from 'mdsvex';
 import hljs from 'highlight.js';
 import path from 'path';
 import { VitePWA } from 'vite-plugin-pwa'
-import { pwaConfiguration } from './scripts/pwa-configuration.js';
+import { pwaConfiguration } from './scripts/sw-pwa-configuration.js';
 
 const extensions = [`.svelte`, '.md', `.mdx`, '.svx'];
 
@@ -33,6 +33,9 @@ const config = {
 		adapter: adapter(),
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#sveltekit-entry',
+		prerender: {
+			enabled: true
+		},
 		vite: {
 			optimizeDeps: {
 				// workaround Vite issue to fix highlighting on cheatsheet
