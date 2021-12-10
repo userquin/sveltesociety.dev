@@ -1,0 +1,85 @@
+{
+  "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.wemanifest",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/prompt-sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/flights",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/circles",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/profile",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/news",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/about",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.+)",
+      "headers" : [
+        {
+          "key" : "Cache-Control",
+          "value" : "public, max-age=31536000, s-maxage=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

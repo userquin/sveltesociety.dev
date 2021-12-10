@@ -38,8 +38,8 @@ const pwaConfiguration = {
 		]
 	},
 	injectManifest: {
-		globDirectory: './.vercel_build_output/',
-		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,jeg,jpeg,webp,svg,woff2,webmanifest}'],
+		globDirectory: './.vercel_build_output/static/',
+		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,jeg,jpeg,webp,svg,woff2,woff,json,webmanifest}'],
 		globIgnores: ['**/prompt-sw*', '**/workbox-*'],
 		/** @type {import('workbox-build').ManifestTransform} */
 		manifestTransforms: [async(entries) => {
@@ -52,23 +52,12 @@ const pwaConfiguration = {
 				return acc;
 			}, new Map());
 
-			const dynamicResources = [
-				[/^static\/(.+)$/, ([, m]) => m],
-			]
 			const manifest = [...deduplicated.values()].map((e) => {
-				let m
-				for (let i = 0; i < dynamicResources.length; i++) {
-					m = e.url.match(dynamicResources[i][0])
-					if (m) {
-						e.url = dynamicResources[i][1](m)
-						if (e.url.endsWith('.html')) {
-							if (e.url === 'index.html') {
-								e.url = '/'
-							} else {
-								e.url = e.url.slice(0, e.url.lastIndexOf('/'))
-							}
-						}
-						break
+				if (e.url.endsWith('.html')) {
+					if (e.url === 'index.html') {
+						e.url = '/'
+					} else {
+						e.url = e.url.slice(0, e.url.lastIndexOf('/'))
 					}
 				}
 				return e;

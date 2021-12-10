@@ -50,8 +50,8 @@ const pwaConfiguration = {
 	workbox: {
 		mode: 'development',
 		navigateFallback: scope,
-		globDirectory: './.vercel_build_output/',
-		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,jeg,jpeg,webp,svg,woff2,webmanifest}'],
+		globDirectory: './.vercel_build_output/static/',
+		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,jeg,jpeg,webp,svg,woff2,woff,json,webmanifest}'],
 		globIgnores: [
 			'**/sw*', '**/workbox-*'
 		],

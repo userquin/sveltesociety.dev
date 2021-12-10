@@ -40,7 +40,7 @@ const pwaConfiguration = {
 		]
 	},
 	injectManifest: {
-		globDirectory: './.vercel_build_output/',
+		globDirectory: './.vercel_build_output/static/',
 		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,jeg,jpeg,webp,svg,woff2,webmanifest}'],
 		globIgnores: ['**/prompt-sw*', '**/workbox-*'],
 		/** @type {import('workbox-build').ManifestTransform} */
