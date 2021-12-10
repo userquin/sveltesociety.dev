@@ -1,17 +1,5 @@
 const scope = '/'
 
-const createRevision = () => {
-	let revision
-	return () => {
-		if (!revision) {
-			revision = `${Date.now()}`
-		}
-		return revision
-	}
-}
-
-const revision = createRevision()
-
 const pwaConfiguration = {
 	srcDir: './.vercel_build_output',
 	outDir: './.vercel_build_output/static/',
@@ -48,14 +36,11 @@ const pwaConfiguration = {
 			}
 		]
 	},
-	workbox: {
+	injectManifest: {
 		mode: 'development',
-		navigateFallback: scope,
 		globDirectory: './.vercel_build_output/',
 		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,jeg,jpeg,webp,svg,woff2,webmanifest}'],
-		globIgnores: [
-			'**/sw*', '**/workbox-*'
-		],
+		globIgnores: ['**/prompt-sw*', '**/workbox-*'],
 		/** @type {import('workbox-build').ManifestTransform} */
 		manifestTransforms: [async(entries) => {
 			const deduplicated = entries.reduce((acc, e) => {
@@ -91,53 +76,6 @@ const pwaConfiguration = {
 
 			return { manifest };
 		}],
-		// additionalManifestEntries: ['/', '/about', '/flights', '/circles', '/news'].map((url) => {
-		// 	return {
-		// 		url,
-		// 		revision: revision()
-		// 	}
-		// }),
-		runtimeCaching: [
-			{
-				handler: 'NetworkFirst',
-				urlPattern: /\/*\.json/,
-				method: 'GET',
-				options: {
-					cacheName: 'api-prefetch-cache',
-					cacheableResponse: {
-						statuses: [0, 200],
-					},
-				},
-			},
-			{
-				urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-				handler: 'CacheFirst',
-				options: {
-					cacheName: 'google-fonts-cache',
-					expiration: {
-						maxEntries: 10,
-						maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
-					},
-					cacheableResponse: {
-						statuses: [0, 200],
-					},
-				},
-			},
-			{
-				urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-				handler: 'CacheFirst',
-				options: {
-					cacheName: 'gstatic-fonts-cache',
-					expiration: {
-						maxEntries: 100,
-						maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
-					},
-					cacheableResponse: {
-						statuses: [0, 200],
-					},
-				},
-			},
-		],
 	}
 };
 
