@@ -22,26 +22,6 @@ cleanupOutdatedCaches()
 // to allow work offline
 registerRoute(new NavigationRoute(createHandlerBoundToURL('/')))
 
-// const circlesHandler = createHandlerBoundToURL('/circles')
-// const indexHandler = createHandlerBoundToURL('/')
-
-/*
- export interface RouteHandlerCallbackOptions {
-  event: ExtendableEvent;
-  request: Request;
-  url: URL;
-  params?: string[] | MapLikeObject;
-}
-
- */
-// registerRoute(/./, async(options) => {
-// 	const { url } = options
-// 	if (url.pathname && url.pathname.startsWith('/circles'))
-// 		return await circlesHandler(options)
-//
-// 	return await indexHandler(options)
-// }, 'GET')
-//
 registerRoute(
 	({ url }) => url.origin === 'https://fonts.googleapis.com',
 	new CacheFirst({
