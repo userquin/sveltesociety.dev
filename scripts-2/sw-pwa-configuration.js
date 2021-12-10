@@ -2,7 +2,8 @@ const scope = '/'
 
 const pwaConfiguration = {
 	srcDir: 'src',
-	outDir: 'prompt-sw.ts',
+	filename: 'prompt-sw.ts',
+	outDir: './.vercel_build_output/static/',
 	strategy: 'injectManifest',
 	mode: 'development',
 	includeManifestIcons: false,
@@ -10,7 +11,6 @@ const pwaConfiguration = {
 	base: scope,
 	manifest: {
 		id: scope,
-		useCredentials: true,
 		short_name: 'FlightLog',
 		name: 'Flight Logging',
 		start_url: scope,
