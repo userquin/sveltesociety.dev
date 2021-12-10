@@ -1,8 +1,9 @@
 const scope = '/'
 
 const pwaConfiguration = {
-	srcDir: './.vercel_build_output',
-	outDir: './.vercel_build_output/static/',
+	srcDir: 'src',
+	outDir: 'prompt-sw.ts',
+	strategy: 'injectManifest',
 	mode: 'development',
 	includeManifestIcons: false,
 	scope,
@@ -37,7 +38,6 @@ const pwaConfiguration = {
 		]
 	},
 	injectManifest: {
-		mode: 'development',
 		globDirectory: './.vercel_build_output/',
 		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,jeg,jpeg,webp,svg,woff2,webmanifest}'],
 		globIgnores: ['**/prompt-sw*', '**/workbox-*'],
