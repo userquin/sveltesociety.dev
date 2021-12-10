@@ -4,7 +4,7 @@ const pwaConfiguration = {
 	srcDir: 'src',
 	filename: 'prompt-sw.ts',
 	outDir: './.vercel_build_output/static/',
-	strategy: 'injectManifest',
+	strategies: 'injectManifest',
 	mode: 'development',
 	includeManifestIcons: false,
 	scope,
@@ -20,17 +20,17 @@ const pwaConfiguration = {
 		background_color: "#ffffff",
 		icons: [
 			{
-				src: 'logo192.png',
+				src: '/logo192.png',
 				sizes: "192x192",
 				type: "image/png"
 			},
 			{
-				src: 'logo512.png',
+				src: '/logo512.png',
 				"sizes": "512x512",
 				"type": "image/png"
 			},
 			{
-				src: 'logo512.png',
+				src: '/logo512.png',
 				"sizes": "512x512",
 				"type": "image/png",
 				"purpose": "any maskable"
@@ -40,7 +40,7 @@ const pwaConfiguration = {
 	injectManifest: {
 		globDirectory: './.vercel_build_output/static/',
 		globPatterns: ['robots.txt', '**/*.{js,css,html,ico,png,jeg,jpeg,webp,svg,woff2,woff,json,webmanifest}'],
-		globIgnores: ['**/prompt-sw*', '**/workbox-*'],
+		globIgnores: ['**/prompt-sw*'],
 		/** @type {import('workbox-build').ManifestTransform} */
 		manifestTransforms: [async(entries) => {
 			const deduplicated = entries.reduce((acc, e) => {
